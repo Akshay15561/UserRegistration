@@ -28,7 +28,7 @@ public class UserRegistration {
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
         if (!isValidPassword(password)) {
-            System.out.println("Invalid Password! It must be at least 8 characters long.");
+            System.out.println("Invalid Password! It must be at least 8 characters long and contain at least one uppercase letter.");
             return;
         }
 
@@ -78,7 +78,15 @@ public class UserRegistration {
     }
 
     public static boolean isValidPassword(String password) {
-        return password.length() >= 8;
+        if (password.length() < 8) {
+            return false;
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            return false;
+        }
+
+        return true;
     }
 
 
