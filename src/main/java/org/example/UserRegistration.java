@@ -86,6 +86,10 @@ public class UserRegistration {
             return false;
         }
 
+        if (!password.matches(".*\\d.*")) {
+            return false;
+        }
+
         return true;
     }
 
