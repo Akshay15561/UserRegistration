@@ -37,6 +37,10 @@ public class UserRegistration {
 
         System.out.print("Enter Phone Number: ");
         String phoneNumber = scanner.nextLine();
+        if (!isValidPhoneNumber(phoneNumber)) {
+            System.out.println("Invalid Phone Number!\n"+" It must follow the format '91 9919819801'.");
+            return;
+        }
 
         System.out.print("Enter Date of Birth (yyyy-mm-dd): ");
         String dob = scanner.nextLine();
@@ -63,6 +67,10 @@ public class UserRegistration {
             return false;
         }
         return email.matches(emailRegex);
+    }
+
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^91 \\d{10}$");
     }
 
 
