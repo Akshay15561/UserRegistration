@@ -28,7 +28,11 @@ public class UserRegistration {
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
         if (!isValidPassword(password)) {
-            System.out.println("Invalid Password! It must be at least 8 characters long and contain at least one uppercase letter.");
+            System.out.println("Invalid Password! It must meet the following rules:");
+            System.out.println("1. At least 8 characters long.");
+            System.out.println("2. Contain at least one uppercase letter.");
+            System.out.println("3. Contain at least one numeric digit.");
+            System.out.println("4. Contain exactly one special character (e.g., @, #, $, %, etc.).");
             return;
         }
 
@@ -87,6 +91,10 @@ public class UserRegistration {
         }
 
         if (!password.matches(".*\\d.*")) {
+            return false;
+        }
+
+        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*") || password.replaceAll("[^!@#$%^&*(),.?\":{}|<>]", "").length() != 1) {
             return false;
         }
 
