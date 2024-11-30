@@ -27,6 +27,10 @@ public class UserRegistration {
 
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
+        if (!isValidPassword(password)) {
+            System.out.println("Invalid Password! It must be at least 8 characters long.");
+            return;
+        }
 
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
@@ -73,7 +77,9 @@ public class UserRegistration {
         return phoneNumber.matches("^91 \\d{10}$");
     }
 
-
+    public static boolean isValidPassword(String password) {
+        return password.length() >= 8;
+    }
 
 
 
