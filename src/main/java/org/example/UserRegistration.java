@@ -30,6 +30,10 @@ public class UserRegistration {
 
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
+        if (!isValidEmail(email)) {
+            System.out.println("Invalid Email! Please enter a valid email address.");
+            return;
+        }
 
         System.out.print("Enter Phone Number: ");
         String phoneNumber = scanner.nextLine();
@@ -39,6 +43,7 @@ public class UserRegistration {
 
         System.out.println("\nRegistration Details:");
         System.out.println("First Name: " + firstName);
+        System.out.print("Last Name: "+ lastName);
         System.out.println("Username: " + username);
         System.out.println("Password: " + password);
         System.out.println("Email: " + email);
@@ -49,8 +54,17 @@ public class UserRegistration {
     }
 
     public static boolean isValidName(String firstName) {
-        return firstName.matches("[A-Z][a-zA-Z]{2,}");
+        return firstName.matches("^[A-Z][a-zA-Z]{2,}");
     }
+
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9]+(\\.[a-zA-Z]{2,})+$";
+        if (email.contains("..") || email.endsWith(".") || email.contains("@.") || email.indexOf('@') != email.lastIndexOf('@')) {
+            return false;
+        }
+        return email.matches(emailRegex);
+    }
+
 
 
 
