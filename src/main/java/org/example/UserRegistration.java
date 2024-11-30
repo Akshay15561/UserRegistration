@@ -74,6 +74,18 @@ public class UserRegistration {
         if (email.contains("..") || email.endsWith(".") || email.contains("@.") || email.indexOf('@') != email.lastIndexOf('@')) {
             return false;
         }
+
+        String[] emailParts = email.split("@");
+        String domainPart = emailParts[1];
+        if (domainPart.startsWith(".") || !domainPart.matches(".*\\.[a-zA-Z]{2,}$")) {
+            return false;
+        }
+
+
+        String tld = domainPart.substring(domainPart.lastIndexOf('.') + 1);
+        if (tld.matches(".*\\d.*")) {
+            return false;
+        }
         return email.matches(emailRegex);
     }
 
