@@ -10,8 +10,15 @@ public class UserRegistration {
 
         System.out.print("Enter First Name: ");
         String firstName = scanner.nextLine();
-        if (!isValidFirstName(firstName)) {
+        if (!isValidName(firstName)) {
             System.out.println("Invalid First Name\n"+  "It must start with a capital letter and have at least 3 characters");
+            return;
+        }
+
+        System.out.print("Enter Last Name: ");
+        String lastName = scanner.nextLine();
+        if (!isValidName(lastName)) {
+            System.out.println("Invalid Last Name\n"+  "It must start with a capital letter and have at least 3 characters");
             return;
         }
 
@@ -41,7 +48,7 @@ public class UserRegistration {
         System.out.println("\nRegistration Successful!");
     }
 
-    public static boolean isValidFirstName(String firstName) {
+    public static boolean isValidName(String firstName) {
         return firstName.matches("[A-Z][a-zA-Z]{2,}");
     }
 
