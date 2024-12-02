@@ -76,6 +76,9 @@ public class UserRegistration {
         }
 
         String[] emailParts = email.split("@");
+        if (emailParts.length < 2) {
+            return false;
+        }
         String domainPart = emailParts[1];
         if (domainPart.startsWith(".") || !domainPart.matches(".*\\.[a-zA-Z]{2,}$")) {
             return false;
