@@ -93,7 +93,7 @@ public class UserRegistration {
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber.matches("^91 \\d{10}$");
+        return phoneNumber.matches("^91\\d{10}$");
     }
 
     public static boolean isValidPassword(String password) {
