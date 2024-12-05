@@ -3,6 +3,7 @@ package org.example;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.example.UserRegistration.isValidEmail;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EmailValidationTest {
@@ -20,8 +21,13 @@ public class EmailValidationTest {
             "@domain.com, false",
             "user@@domain.com, false"
     })
-    void testEmailValidation(String email, boolean expected) {
-        assertEquals(expected, UserRegistration.isValidEmail(email),
-                () -> "Email validation failed for: " + email);
-    }
+    public void validateEmail(String email, boolean expected) {
+        if (expected) {
+            assertDoesNotThrow(() -> UserRegistration.isValidEmail(email), "Valid email pass validation.");
+        } else {
+            assertThrows(InvalidEmailException.class, () -> UserRegistration.isValidEmail(email), "Invalid email should throw exception.");
+        }
+
+
+}
 }

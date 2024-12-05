@@ -7,21 +7,23 @@ public class UserRegistrationTest {
     @Test
     void testValidFirstName() {
 
-        assertTrue(UserRegistration.isValidName("John"), "Valid first name pass validation.");
+        assertDoesNotThrow(() -> UserRegistration.isfirstValidName("Akshay"),"Valid first name pass validation.");
 
 
-        assertFalse(UserRegistration.isValidName("jo"), "First name with less than 3 characters fail.");
-        assertFalse(UserRegistration.isValidName("john"), "First name not starting with a capital letter fail.");
+
+        assertThrows(InvalidNameException.class, () -> UserRegistration.isfirstValidName("ak"),"first name with less than 3 characters fail.");
+        assertThrows(InvalidNameException.class, () -> UserRegistration.isfirstValidName("akshay"),"first name not starting with a capital letter fail.");
     }
 
     @Test
     void testValidLastName() {
 
-        assertTrue(UserRegistration.isValidName("Doe"), "Valid last name pass validation.");
+        assertDoesNotThrow(() -> UserRegistration.islastValidName("Kawale"),"Valid first name pass validation.");
 
 
-        assertFalse(UserRegistration.isValidName("do"), "Last name with less than 3 characters fail.");
-        assertFalse(UserRegistration.isValidName("doe"), "Last name not starting with a capital letter fail.");
+
+        assertThrows(InvalidNameException.class, () -> UserRegistration.islastValidName("Ka"),"first name with less than 3 characters fail.");
+        assertThrows(InvalidNameException.class, () -> UserRegistration.islastValidName("kawale"),"first name not starting with a capital letter fail.");
     }
 
 //    @Test
@@ -38,24 +40,24 @@ public class UserRegistrationTest {
     @Test
     void testValidPhoneNumber() {
 
-        assertTrue(UserRegistration.isValidPhoneNumber("919919819801"), "Valid phone number pass validation.");
+        assertDoesNotThrow(() -> UserRegistration.isValidPhoneNumber("919919819801"), "Valid phone number pass validation.");
 
 
-        assertFalse(UserRegistration.isValidPhoneNumber("91 9919819801"), "Phone number with space fail.");
-        assertFalse(UserRegistration.isValidPhoneNumber("91 99198198"), "Phone number with less than 10 digits fail.");
+        assertThrows(InvalidPhoneNumberException.class, () -> UserRegistration.isValidPhoneNumber("91 9919819801"), "Phone number with space fail.");
+        assertThrows(InvalidPhoneNumberException.class, () -> UserRegistration.isValidPhoneNumber("91 99198"), "Phone number with less than 10 digits fail.");
     }
 
     @Test
     void testValidPassword() {
 
-        assertTrue(UserRegistration.isValidPassword("Password@1"), "Valid password pass validation.");
+        assertDoesNotThrow(() -> UserRegistration.isValidPassword("Password@1"), "Valid password pass validation.");
 
 
-        assertFalse(UserRegistration.isValidPassword("pass@1"), "Password with less than 8 characters fail.");
-        assertFalse(UserRegistration.isValidPassword("Password1"), "Password without a special character fail.");
-        assertFalse(UserRegistration.isValidPassword("Password@@1"), "Password with more than one special character fail.");
-        assertFalse(UserRegistration.isValidPassword("password@1"), "Password without an uppercase letter fail.");
-        assertFalse(UserRegistration.isValidPassword("PASSWORD@"), "Password without a digit fail.");
+        assertThrows(InvalidPasswordException.class, () -> UserRegistration.isValidPassword("pass@1"), "Password with less than 8 characters fail.");
+        assertThrows(InvalidPasswordException.class, () -> UserRegistration.isValidPassword("Password1"), "Password without a special character fail.");
+        assertThrows(InvalidPasswordException.class, () -> UserRegistration.isValidPassword("Password@@1"), "Password with more than one special character fail.");
+        assertThrows(InvalidPasswordException.class, () -> UserRegistration.isValidPassword("password@1"), "Password without an uppercase letter fail.");
+        assertThrows(InvalidPasswordException.class, () -> UserRegistration.isValidPassword("PASSWORD@"), "Password without a digit fail.");
     }
 
 
