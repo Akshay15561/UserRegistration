@@ -1,6 +1,11 @@
 package org.example;
 import java.util.Scanner;
 
+@FunctionalInterface
+interface ValidationRule<T> {
+    boolean validate(T input) throws RuntimeException;
+}
+
 
 public class UserRegistration {
     public static void main(String[] args) {
@@ -49,63 +54,30 @@ public class UserRegistration {
         }
     }
 
-    public static void isfirstValidName(String firstName) {
-        if (!firstName.matches("^[A-Z][a-zA-Z]{2,}")) {
-            throw new InvalidNameException("Invalid Name: Must start with a capital letter and have at least 3 characters.");
-        }
-    }public static void islastValidName(String lastName) {
-        if( !lastName.matches("^[A-Z][a-zA-Z]{2,}")){
-            throw new InvalidNameException("Invalid Name: Must start with a capital letter and have at least 3 characters.");
-        }
-    }
+    static ValidationRule<String> isFirstNameValid = firstName -> firstName.matches("^[A-Z][a-zA-Z]{2,}");
+    static ValidationRule<String> isLastNameValid = lastName -> lastName.matches("^[A-Z][a-zA-Z]{2,}");
 
 
 
-    public static void isValidPhoneNumber(String phoneNumber) {
-        if (!phoneNumber.matches("^91\\d{10}$")){
-            throw new InvalidPhoneNumberException("Invalid Phone Number: Must follow the format '919919819801'.");
-        }
-    }
+    static ValidationRule<String> isPhoneNumberValid = phoneNumber -> phoneNumber.matches("^91\\d{10}$");
 
-    public static void isValidPassword(String password) {
-        if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*\\d.*") ||
-                !password.matches(".*[!@#$%^&*(),.?\":{}|<>].*") ||
-                password.replaceAll("[^!@#$%^&*(),.?\":{}|<>]", "").length() != 1) {
-            throw new InvalidPasswordException("Invalid Password: Must meet all specified rules.");
-        }
-    }
+    static ValidationRule<String> isPasswordValid = password ->
+            password.length() >= 8 &&
+                    password.matches(".*[A-Z].*") &&
+                    password.matches(".*\\d.*") &&
+                    password.matches(".*[!@#$%^&*(),.?\":{}|<>].*") &&
+                    password.replaceAll("[^!@#$%^&*(),.?\":{}|<>]", "").length() == 1;
 
-    public static boolean isValidEmail(String email) throws InvalidEmailException {
-        String emailRegex = "^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9]+(\\.[a-zA-Z]{2,})+$";
 
-        // Check for invalid patterns like "..", ending with ".", etc.
-        if (email.contains("..") || email.endsWith(".") || email.contains("@.") || email.indexOf('@') != email.lastIndexOf('@')) {
-            throw new InvalidEmailException("Invalid email: " + email);
-        }
 
-        // Split the email into username and domain parts
-        String[] emailParts = email.split("@");
-        if (emailParts.length < 2) {
-            throw new InvalidEmailException("Invalid email: " + email);
-        }
-
-        String domainPart = emailParts[1];
-        if (domainPart.startsWith(".") || !domainPart.matches(".*\\.[a-zA-Z]{2,}$")) {
-            throw new InvalidEmailException("Invalid email: " + email);
-        }
-
-        // Check if the top-level domain (TLD) contains digits
-        String tld = domainPart.substring(domainPart.lastIndexOf('.') + 1);
-        if (tld.matches(".*\\d.*")) {
-            throw new InvalidEmailException("Invalid email: " + email);
-        }
-
-        // Final regex check for email validity
-        if (!email.matches(emailRegex)) {
-            throw new InvalidEmailException("Invalid email: " + email);
-        }
-        return email.matches(emailRegex);
-    }
+        static ValidationRule<String> isEmailValid = email -> {
+            String emailRegex = "^[a-zA-Z0-9]+[a-zA-Z0-9._+-]*@[a-zA-Z0-9]+(\\.[a-zA-Z]{2,})+$";
+            return email.matches(emailRegex) &&
+                    !email.contains("..") &&
+                    !email.endsWith(".") &&
+                    email.indexOf('@') == email.lastIndexOf('@') &&
+                    email.split("@")[1].matches(".*\\.[a-zA-Z]{2,}$");
+        };
 }
 
 
